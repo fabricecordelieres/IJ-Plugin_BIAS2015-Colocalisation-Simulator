@@ -27,7 +27,7 @@
 
 #Shape types:
 * *Parallelepiped:*
-  *Parameters: number of elements to draw, width, height and depth of the bounding box.
+  * Parameters: number of elements to draw, width, height and depth of the bounding box.
 * *Ellipsoid:*
   * Parameters: number of elements to draw, width, height and depth of the bounding box.	
 * *Cylinder:*
