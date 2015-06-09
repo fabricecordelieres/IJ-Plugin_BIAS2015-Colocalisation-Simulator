@@ -1,8 +1,10 @@
 # BIAS2015-Colocalisation-Simulator
 
-*BIAS2015 Colocalisation Simulator is an ImageJ plugin designed to generate synthetic images in order to teach and test co-localisation problematics*
+*BIAS2015 Colocalisation Simulator is an ImageJ plugin designed to generate synthetic images in order to teach and test co-localisation problematics.*
+
 
 ![alt tag](https://github.com/fab2506/BIAS2015-Colocalisation-Simulator/blob/master/img/BIAS_Coloc_Simulator.jpg)
+
 
 #Simulation types:
 
