@@ -85,7 +85,7 @@ public class BIAS_Coloc_Simulator_GUI extends JDialog{
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setResizable(false);
 		setTitle("BIAS Colocalisation Simulator");
-		setBounds(100, 100, 575, 520);
+		setBounds(100, 100, 575, 550);
 		SpringLayout springLayout = new SpringLayout();
 		getContentPane().setLayout(springLayout);
 		{
@@ -158,7 +158,7 @@ public class BIAS_Coloc_Simulator_GUI extends JDialog{
 			panelChannel1 = new JPanel();
 			sl_panel.putConstraint(SpringLayout.NORTH, panelChannel1, 6, SpringLayout.SOUTH, panelGlobalParameters);
 			sl_panel.putConstraint(SpringLayout.WEST, panelChannel1, 0, SpringLayout.WEST, panelGlobalParameters);
-			sl_panel.putConstraint(SpringLayout.SOUTH, panelChannel1, 141, SpringLayout.SOUTH, panelGlobalParameters);
+			sl_panel.putConstraint(SpringLayout.SOUTH, panelChannel1, 156, SpringLayout.SOUTH, panelGlobalParameters);
 			sl_panel.putConstraint(SpringLayout.EAST, panelChannel1, 0, SpringLayout.EAST, panelGlobalParameters);
 			panel.add(panelChannel1);
 			panelChannel1.setBorder(new TitledBorder(null, "Channel 1", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -182,7 +182,7 @@ public class BIAS_Coloc_Simulator_GUI extends JDialog{
 			panelChannel2 = new JPanel();
 			sl_panel.putConstraint(SpringLayout.NORTH, panelChannel2, 6, SpringLayout.SOUTH, panelChannel1);
 			sl_panel.putConstraint(SpringLayout.WEST, panelChannel2, 0, SpringLayout.WEST, panel);
-			sl_panel.putConstraint(SpringLayout.SOUTH, panelChannel2, 141, SpringLayout.SOUTH, panelChannel1);
+			sl_panel.putConstraint(SpringLayout.SOUTH, panelChannel2, 156, SpringLayout.SOUTH, panelChannel1);
 			sl_panel.putConstraint(SpringLayout.EAST, panelChannel2, 0, SpringLayout.EAST, panelGlobalParameters);
 			panel.add(panelChannel2);
 			panelChannel2.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Channel 2", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -203,7 +203,7 @@ public class BIAS_Coloc_Simulator_GUI extends JDialog{
 				}
 			}
 		}
-		{	
+		{
 		}
 	}
 	
@@ -213,24 +213,26 @@ public class BIAS_Coloc_Simulator_GUI extends JDialog{
 	 * @return a model to be used to fill the channel table
 	 */
 	DefaultTableModel getChannelModel(int channel){
-		String[] columnNames=new String[]{"Element", "Draw", "Nb of items", "Width", "Height", "Depth", "R", "r"};
+		String[] columnNames=new String[]{"Element", "Draw", "Nb of items", "Width", "Height", "Depth", "R", "r", "Step"};
 		
 		Object[][] data=
 				channel==1?
 				new Object[][]{
-				{"Parallelepiped", Boolean.TRUE, new Integer(4), new Integer(32), new Integer(32), new Integer(32), null, null},
-				{"Ellipsoid", Boolean.TRUE, new Integer(4), new Integer(32), new Integer(32), new Integer(32), null, null},
-				{"Cylinder", Boolean.TRUE, new Integer(4), new Integer(32), new Integer(32), new Integer(32), null, null},
-				{"Cone", Boolean.TRUE, new Integer(4), new Integer(32), new Integer(32), new Integer(32), null, null},
-				{"Torus", Boolean.TRUE, new Integer(4), new Integer(32), new Integer(32), new Integer(32), new Integer(32), new Integer(4)}
+				{"Parallelepiped", Boolean.TRUE, new Integer(4), new Integer(32), new Integer(32), new Integer(32), null, null, null},
+				{"Ellipsoid", Boolean.TRUE, new Integer(4), new Integer(32), new Integer(32), new Integer(32), null, null, null},
+				{"Cylinder", Boolean.TRUE, new Integer(4), new Integer(32), new Integer(32), new Integer(32), null, null, null},
+				{"Cone", Boolean.TRUE, new Integer(4), new Integer(32), new Integer(32), new Integer(32), null, null, null},
+				{"Torus", Boolean.TRUE, new Integer(4), new Integer(32), new Integer(32), new Integer(32), new Integer(32), new Integer(4), null},
+				{"Helix", Boolean.TRUE, new Integer(4), new Integer(32), new Integer(32), new Integer(32), new Integer(32), new Integer(4), new Integer(2)}
 				}
 				:
 				new Object[][]{
-				{"Parallelepiped", Boolean.TRUE, new Integer(4), new Integer(16), new Integer(16), new Integer(16), null, null},
-				{"Ellipsoid", Boolean.TRUE, new Integer(4), new Integer(16), new Integer(16), new Integer(16), null, null},
-				{"Cylinder", Boolean.TRUE, new Integer(4), new Integer(16), new Integer(16), new Integer(16), null, null},
-				{"Cone", Boolean.TRUE, new Integer(4), new Integer(16), new Integer(16), new Integer(16), null, null},
-				{"Torus", Boolean.TRUE, new Integer(4), new Integer(16), new Integer(16), new Integer(16), new Integer(16), new Integer(2)}
+				{"Parallelepiped", Boolean.TRUE, new Integer(4), new Integer(16), new Integer(16), new Integer(16), null, null, null},
+				{"Ellipsoid", Boolean.TRUE, new Integer(4), new Integer(16), new Integer(16), new Integer(16), null, null, null},
+				{"Cylinder", Boolean.TRUE, new Integer(4), new Integer(16), new Integer(16), new Integer(16), null, null, null},
+				{"Cone", Boolean.TRUE, new Integer(4), new Integer(16), new Integer(16), new Integer(16), null, null, null},
+				{"Torus", Boolean.TRUE, new Integer(4), new Integer(16), new Integer(16), new Integer(16), new Integer(16), new Integer(2), null},
+				{"Helix", Boolean.TRUE, new Integer(4), new Integer(16), new Integer(16), new Integer(16), new Integer(16), new Integer(2), new Integer(2)}
 				};
 		
 		DefaultTableModel out=new DefaultTableModel(data, columnNames) {
@@ -239,7 +241,7 @@ public class BIAS_Coloc_Simulator_GUI extends JDialog{
 			 */
 			private static final long serialVersionUID = 1L;
 			@SuppressWarnings("rawtypes")
-			Class[] columnTypes = new Class[] {String.class, Boolean.class, Integer.class, Integer.class, Integer.class, Integer.class, Integer.class, Integer.class};
+			Class[] columnTypes = new Class[] {String.class, Boolean.class, Integer.class, Integer.class, Integer.class, Integer.class, Integer.class, Integer.class, Integer.class};
 			
 			@SuppressWarnings({ "rawtypes", "unchecked" })
 			@Override

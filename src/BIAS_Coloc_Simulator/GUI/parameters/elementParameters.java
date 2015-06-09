@@ -46,6 +46,8 @@ public class elementParameters {
 	public int R=0;
 	/** Element's r (torus small radius) **/
 	public int r=0;
+	/** Element's step (helix step) **/
+	public int step=0;
 	
 	/**
 	 * Read the parameters for a single elements from the table model
@@ -61,6 +63,7 @@ public class elementParameters {
 		depth=(Integer) model.getValueAt(row, 5);
 		R=model.getValueAt(row, 6)!=null?(Integer) model.getValueAt(row, 6):-1;
 		r=model.getValueAt(row, 7)!=null?(Integer) model.getValueAt(row, 7):-1;
+		step=model.getValueAt(row, 8)!=null?(Integer) model.getValueAt(row, 8):-1;
 	}
 	
 	/**
@@ -76,6 +79,7 @@ public class elementParameters {
 		if(name=="Cylinder") type=modulo%3+2;
 		if(name=="Cone") type=modulo%3+5;
 		if(name=="Torus") type=modulo%3+8;
+		if(name=="Helix") type=modulo%3+11;
 		
 		point3D centrePoint=new point3D();
 		centrePoint.generateRandomCoordinates(dimensions.getX(), dimensions.getY(), dimensions.getZ(), intensity);
@@ -84,10 +88,11 @@ public class elementParameters {
 		
 		geometricalElement element=new geometricalElement(centrePoint, boundingBox, intensity);
 		element.setType(type);
-		if(name=="Torus"){
+		if(name=="Torus" || name=="Helix"){
 			element.setRTorus(R);
 			element.setRTorus(r);
 		}
+		if(name=="Helix") element.setStep(step);
 		
 		
 		return element;
@@ -101,9 +106,12 @@ public class elementParameters {
 				name+"-width="+width+"\n"+
 				name+"-height="+height+"\n"+
 				name+"-depth="+depth+"\n"+
-				(name.equals("Torus")?
+				((name.equals("Torus")||name.equals("Helix"))?
 						name+"-R="+R+"\n"+
 						name+"-r="+r+"\n"
+						:"")+
+				(name.equals("Helix")?
+						name+"-step="+step
 						:"");
 	}
 }

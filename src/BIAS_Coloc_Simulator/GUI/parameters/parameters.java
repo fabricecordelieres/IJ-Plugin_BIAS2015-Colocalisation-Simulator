@@ -35,10 +35,10 @@ public class parameters {
 	public globalParameters[] globalParameters=new globalParameters[4];
 	
 	/**Channel1 parameters **/
-	public elementParameters[] channel1Parameters=new elementParameters[5];
+	public elementParameters[] channel1Parameters=new elementParameters[6];
 	
 	/**Channel2 parameters **/
-	public elementParameters[] channel2Parameters=new elementParameters[5];
+	public elementParameters[] channel2Parameters=new elementParameters[6];
 	
 	/**
 	 * Reads the parameters from the GUI
@@ -55,18 +55,18 @@ public class parameters {
 		for(int i=0; i<4; i++) this.globalParameters[i]=new globalParameters(globalParameters, i);
 		
 		//Reads parameters for channel 1
-		for(int i=0; i<5; i++) this.channel1Parameters[i]=new elementParameters(channel1, i);
+		for(int i=0; i<6; i++) this.channel1Parameters[i]=new elementParameters(channel1, i);
 		
 		//Reads parameters for channel 2
-		for(int i=0; i<5; i++) this.channel2Parameters[i]=new elementParameters(channel2, i);
+		for(int i=0; i<6; i++) this.channel2Parameters[i]=new elementParameters(channel2, i);
 	}
 
 	@Override
 	public String toString(){
 		String out=method;
 		for(int i=0; i<4; i++) out+="\n"+globalParameters[i];
-		for(int i=0; i<5; i++) out+="\n"+channel1Parameters[i];
-		for(int i=0; i<5; i++) out+="\n"+channel2Parameters[i];
+		for(int i=0; i<6; i++) out+="\n"+channel1Parameters[i];
+		for(int i=0; i<6; i++) out+="\n"+channel2Parameters[i];
 		return out;
 	}
 }

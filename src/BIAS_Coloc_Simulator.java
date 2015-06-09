@@ -35,5 +35,4 @@ public class BIAS_Coloc_Simulator implements PlugIn{
 	public void run(String arg) {
 		BIAS_Coloc_Simulator_GUI.main(null);
 	}
-
 }

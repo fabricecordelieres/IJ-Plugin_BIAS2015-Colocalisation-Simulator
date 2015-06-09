@@ -63,6 +63,7 @@ public class test_geometricalElements {
 			point3D innerBoundingBox=new point3D(32, 32, 32);
 			ge.get(i).innerBoundingBox=innerBoundingBox;
 			
+			/*
 			if(i%11>7 && i%11<11){
 				int min=boundingBox.getMinCoordinate();
 				int max=boundingBox.getMaxCoordinate();
@@ -70,9 +71,18 @@ public class test_geometricalElements {
 				ge.get(i).setRTorus((int) (Math.random()*max/2.0));
 				ge.get(i).innerBoundingBox=null;
 			}
+			*/
+			
+			int min=boundingBox.getMinCoordinate();
+			int max=boundingBox.getMaxCoordinate();
+			ge.get(i).setrTorus((int) (Math.random()*min/5.0));
+			ge.get(i).setRTorus((int) (Math.random()*max/2.0));
+			ge.get(i).innerBoundingBox=null;
+			
+			ge.get(i).fill(11, 250);
 			
 			
-			ge.get(i).fill(i%11, (i+1)*10);
+			//ge.get(i).fill(i%11, (i+1)*10);
 			//ge.get(i).fill(i%3+8, (i+1)*10);
 			ge.get(i).drawOnImage(ip);
 			

@@ -46,6 +46,9 @@ public class geometricalElement {
 	/** For torus: R **/
 	public int RTorus=10;
 	
+	/** For helix: step **/
+	public int step=5;
+	
 	
 	/** List of points constitutive of the element **/
 	public ArrayList<point3D> points=new ArrayList<point3D>();
@@ -85,6 +88,15 @@ public class geometricalElement {
 	
 	/** Filling type: torusYZ **/
 	static final int TORUS_YZ=10;
+	
+	/** Filling type: helixXY **/
+	static final int HELIX_XY=11;
+	
+	/** Filling type: helixXZ **/
+	static final int HELIX_XZ=12;
+	
+	/** Filling type: helixYZ **/
+	static final int HELIX_YZ=13;
 	
 	/**
 	 * Creates a new geometrical element based on input parameters
@@ -133,6 +145,15 @@ public class geometricalElement {
 	 */
 	public void setRTorus(int R){
 		RTorus=R;
+		initiateElement(0);
+	}
+	
+	/**
+	 * Sets the helix step
+	 * @param s step
+	 */
+	public void setStep(int s){
+		step=s;
 		initiateElement(0);
 	}
 	
@@ -269,6 +290,24 @@ public class geometricalElement {
 							
 						case TORUS_YZ:
 							put=((double) RTorus-Math.sqrt(yPos*yPos+zPos*zPos))*((double) RTorus-Math.sqrt(yPos*yPos+zPos*zPos))+xPos*xPos<=(double) rTorus*rTorus;
+							break;
+							
+						case HELIX_XY:
+							put=(xPos-RTorus*Math.cos(zPos/step))*(xPos-RTorus*Math.cos(zPos/step))
+									+(yPos-RTorus*Math.sin(zPos/step))*(yPos-RTorus*Math.sin(zPos/step))
+									<=rTorus*rTorus;
+							break;
+							
+						case HELIX_XZ:
+							put=(xPos-RTorus*Math.cos(yPos/step))*(xPos-RTorus*Math.cos(yPos/step))
+									+(zPos-RTorus*Math.sin(yPos/step))*(zPos-RTorus*Math.sin(yPos/step))
+									<=rTorus*rTorus;
+							break;
+						
+						case HELIX_YZ:
+							put=(yPos-RTorus*Math.cos(xPos/step))*(yPos-RTorus*Math.cos(xPos/step))
+									+(zPos-RTorus*Math.sin(xPos/step))*(zPos-RTorus*Math.sin(xPos/step))
+									<=rTorus*rTorus;
 							break;
 							
 					}
@@ -438,6 +477,7 @@ public class geometricalElement {
 		out.innerBoundingBox=innerBoundingBox;
 		out.rTorus=rTorus;
 		out.RTorus=RTorus;
+		out.step=step;
 		
 		for(int i=0; i<points.size(); i++){
 			out.points.add(points.get(i).duplicate());
