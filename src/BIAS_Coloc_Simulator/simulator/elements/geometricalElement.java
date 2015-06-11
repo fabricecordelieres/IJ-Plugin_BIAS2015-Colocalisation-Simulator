@@ -198,8 +198,8 @@ public class geometricalElement {
 		double tanInnerAngleY=innerBoundingBox==null?0.0:Math.min(innerRadX, innerRadZ)/(2.0*innerRadY);
 		double tanInnerAngleZ=innerBoundingBox==null?0.0:Math.min(innerRadX, innerRadY)/(2.0*innerRadZ);
 		
-		
-		Random randomIntensity=new Random();
+		//Required when generating adding random noise to objects
+		//Random randomIntensity=new Random();
 		
 		for(int z=(int) (centrePoint.z-radZ); z<centrePoint.z+radZ; z++){
 			for(int y=(int) (centrePoint.y-radY); y<centrePoint.y+radY; y++){
@@ -210,8 +210,9 @@ public class geometricalElement {
 					int yPos=y-centrePoint.y;
 					int zPos=z-centrePoint.z;
 					
-					
-					double intensityToPut=randomIntensity.nextGaussian()*Math.sqrt(intensity)+intensity;
+					//Required when generating adding random noise to objects
+					//double intensityToPut=randomIntensity.nextGaussian()*Math.sqrt(intensity)+intensity;
+					double intensityToPut=intensity;
 					
 					switch(type){
 						case PARALLELEPIPED:
