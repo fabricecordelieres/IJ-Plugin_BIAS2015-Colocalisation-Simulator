@@ -24,7 +24,7 @@ import ij.ImagePlus;
 import ij.gui.NewImage;
 
 import java.util.ArrayList;
-import java.util.Random;
+//import java.util.Random;
 
 /**
  * @author Fabrice P Cordelieres
