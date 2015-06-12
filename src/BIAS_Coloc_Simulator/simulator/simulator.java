@@ -76,7 +76,6 @@ public class simulator {
 			elementParameters parameters1=parameters.channel1Parameters[i];
 			elementParameters parameters2=parameters.channel2Parameters[i];
 			
-			
 			for(int j=0; j<Math.max(parameters1.nElements, parameters2.nElements); j++){
 				geometricalElement element1=null;
 				geometricalElement element2=null;
@@ -90,13 +89,18 @@ public class simulator {
 						
 						element2.centrePoint=element1.centrePoint.duplicate();
 						
-						if(element1.type>=8 && element1.type<=10){
-							int shrink=2*(element1.RTorus-element1.rTorus)-1;
+						if(element1.type>=8 && element1.type<=13){
+							int shrink=(int) (2.0*(element1.RTorus-element1.rTorus)-1.0);
 							element2.type=1;
 							
 							element2.boundingBox=new point3D(shrink, shrink, shrink);
 						}else{
 							element1.innerBoundingBox=element2.boundingBox.duplicate();
+						}
+						
+						if(element1.type>=11 && element1.type<=13){
+							element2=element1.duplicate();
+							element2.angle+=Math.PI/2;
 						}
 					}
 				}
@@ -194,7 +198,7 @@ public class simulator {
 			illuminationImage.getProcessor().setColor(maxDimension);
 			illuminationImage.getProcessor().fill(new OvalRoi(parameters.globalParameters[2].x-roiWidth/2, parameters.globalParameters[2].y-roiHeight/2, roiWidth, roiHeight));
 		
-			illuminationImage.getProcessor().blurGaussian(maxDimension);
+			illuminationImage.getProcessor().blurGaussian(maxDimension/2);
 			illuminationImage.setProperty("Info", properties);
 			
 			illuminationImage.resetDisplayRange();

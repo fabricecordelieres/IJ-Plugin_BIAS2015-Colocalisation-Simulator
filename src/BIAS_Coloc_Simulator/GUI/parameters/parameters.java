@@ -52,21 +52,24 @@ public class parameters {
 		this.method=(String) method.getValue();
 		
 		//Reads the global parameters
-		for(int i=0; i<4; i++) this.globalParameters[i]=new globalParameters(globalParameters, i);
+		for(int i=0; i<globalParameters.getRowCount(); i++) this.globalParameters[i]=new globalParameters(globalParameters, i);
 		
 		//Reads parameters for channel 1
-		for(int i=0; i<6; i++) this.channel1Parameters[i]=new elementParameters(channel1, i);
+		for(int i=0; i<channel1.getRowCount(); i++) this.channel1Parameters[i]=new elementParameters(channel1, i);
 		
 		//Reads parameters for channel 2
-		for(int i=0; i<6; i++) this.channel2Parameters[i]=new elementParameters(channel2, i);
+		for(int i=0; i<channel2.getRowCount(); i++) this.channel2Parameters[i]=new elementParameters(channel2, i);
 	}
 
 	@Override
 	public String toString(){
 		String out=method;
-		for(int i=0; i<4; i++) out+="\n"+globalParameters[i];
-		for(int i=0; i<6; i++) out+="\n"+channel1Parameters[i];
-		for(int i=0; i<6; i++) out+="\n"+channel2Parameters[i];
+		out+="\n---Global parameters---\n";
+		for(int i=0; i<globalParameters.length; i++) out+="\n"+globalParameters[i];
+		out+="\n---Channel1 parameters---\n";
+		for(int i=0; i<channel1Parameters.length; i++) out+="\n"+channel1Parameters[i];
+		out+="\n---Channel1 parameters---\n";
+		for(int i=0; i<channel2Parameters.length; i++) out+="\n"+channel2Parameters[i];
 		return out;
 	}
 }

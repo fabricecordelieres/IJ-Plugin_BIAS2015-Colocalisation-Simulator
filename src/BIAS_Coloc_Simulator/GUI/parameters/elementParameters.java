@@ -48,6 +48,8 @@ public class elementParameters {
 	public int r=0;
 	/** Element's step (helix step) **/
 	public int step=0;
+	/** Element's initial angle (helix angle) **/
+	public double angle=0;
 	
 	/**
 	 * Read the parameters for a single elements from the table model
@@ -64,6 +66,7 @@ public class elementParameters {
 		R=model.getValueAt(row, 6)!=null?(Integer) model.getValueAt(row, 6):-1;
 		r=model.getValueAt(row, 7)!=null?(Integer) model.getValueAt(row, 7):-1;
 		step=model.getValueAt(row, 8)!=null?(Integer) model.getValueAt(row, 8):-1;
+		angle=model.getValueAt(row, 9)!=null?(Double) model.getValueAt(row, 9):-1;
 	}
 	
 	/**
@@ -90,9 +93,12 @@ public class elementParameters {
 		element.setType(type);
 		if(name=="Torus" || name=="Helix"){
 			element.setRTorus(R);
-			element.setRTorus(r);
+			element.setrTorus(r);
 		}
-		if(name=="Helix") element.setStep(step);
+		if(name=="Helix"){
+			element.setStep(step);
+			element.setAngle(angle);
+		}
 		
 		
 		return element;

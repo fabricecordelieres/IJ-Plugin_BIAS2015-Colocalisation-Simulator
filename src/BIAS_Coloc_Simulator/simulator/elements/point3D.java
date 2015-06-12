@@ -28,13 +28,13 @@ import java.util.Random;
  */
 public class point3D {
 	/** X coordinate **/
-	int x=0;
+	double x=0;
 	
 	/** Y coordinate **/
-	int y=0;
+	double y=0;
 	
 	/** Z coordinate **/
-	int z=0;
+	double z=0;
 	
 	/** Intensity **/
 	double intensity=0.0;
@@ -52,7 +52,7 @@ public class point3D {
 	 * @param z z coordinate
 	 * @param intensity intensity to be associated to the point
 	 */
-	public point3D(int x, int y, int z, double intensity){
+	public point3D(double x, double y, double z, double intensity){
 		setCoordinates(x, y, z);
 		setIntensity(intensity);
 	}
@@ -63,7 +63,7 @@ public class point3D {
 	 * @param y y coordinate
 	 * @param z z coordinate
 	 */
-	public point3D(int x, int y, int z){
+	public point3D(double x, double y, double z){
 		this(x, y, z, 0);
 	}
 	
@@ -75,8 +75,8 @@ public class point3D {
 	 * @param depth max z coordinate
 	 * @param intensity intensity to be associated to the point
 	 */
-	public void generateRandomCoordinates(int width, int height, int depth, double intensity){
-		setCoordinates(((int) (width*(new Random().nextDouble()))), ((int) (height*(new Random().nextDouble()))), ((int) (depth*(new Random().nextDouble()))));
+	public void generateRandomCoordinates(double width, double height, double depth, double intensity){
+		setCoordinates(width*new Random().nextDouble(), height*new Random().nextDouble(), depth*new Random().nextDouble());
 		setIntensity(intensity);
 	}
 	
@@ -86,7 +86,7 @@ public class point3D {
 	 * @param y y coordinate
 	 * @param z z coordinate
 	 */
-	public void setCoordinates(int x, int y, int z){
+	public void setCoordinates(double x, double y, double z){
 		this.x=x;
 		this.y=y;
 		this.z=z;
@@ -114,7 +114,7 @@ public class point3D {
 	 * Returns the x coordinates of the current point3D
 	 * @return the x coordinates of the current point3D
 	 */
-	public int getX(){
+	public double getX(){
 		return x;
 	}
 	
@@ -122,7 +122,7 @@ public class point3D {
 	 * Returns the y coordinates of the current point3D
 	 * @return the y coordinates of the current point3D
 	 */
-	public int getY(){
+	public double getY(){
 		return y;
 	}
 	
@@ -130,7 +130,7 @@ public class point3D {
 	 * Returns the z coordinates of the current point3D
 	 * @return the z coordinates of the current point3D
 	 */
-	public int getZ(){
+	public double getZ(){
 		return z;
 	}
 	
@@ -164,7 +164,7 @@ public class point3D {
 	 * Returns the minimum coordinate amongst XYZ
 	 * @return the minimum coordinate amongst XYZ
 	 */
-	public int getMinCoordinate(){
+	public double getMinCoordinate(){
 		return Math.min(Math.min(x, y), z);
 	}
 	
@@ -172,7 +172,7 @@ public class point3D {
 	 * Returns the maximum coordinate amongst XYZ
 	 * @return the maximum coordinate amongst XYZ
 	 */
-	public int getMaxCoordinate(){
+	public double getMaxCoordinate(){
 		return Math.max(Math.max(x, y), z);
 	}
 	

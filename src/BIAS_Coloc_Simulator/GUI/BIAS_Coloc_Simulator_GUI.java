@@ -213,26 +213,26 @@ public class BIAS_Coloc_Simulator_GUI extends JDialog{
 	 * @return a model to be used to fill the channel table
 	 */
 	DefaultTableModel getChannelModel(int channel){
-		String[] columnNames=new String[]{"Element", "Draw", "Nb of items", "Width", "Height", "Depth", "R", "r", "Step"};
+		String[] columnNames=new String[]{"Element", "Draw", "Nb of items", "Width", "Height", "Depth", "R", "r", "Step", "Original angle"};
 		
 		Object[][] data=
 				channel==1?
 				new Object[][]{
-				{"Parallelepiped", Boolean.TRUE, new Integer(4), new Integer(32), new Integer(32), new Integer(32), null, null, null},
-				{"Ellipsoid", Boolean.TRUE, new Integer(4), new Integer(32), new Integer(32), new Integer(32), null, null, null},
-				{"Cylinder", Boolean.TRUE, new Integer(4), new Integer(32), new Integer(32), new Integer(32), null, null, null},
-				{"Cone", Boolean.TRUE, new Integer(4), new Integer(32), new Integer(32), new Integer(32), null, null, null},
-				{"Torus", Boolean.TRUE, new Integer(4), new Integer(32), new Integer(32), new Integer(32), new Integer(32), new Integer(4), null},
-				{"Helix", Boolean.TRUE, new Integer(4), new Integer(32), new Integer(32), new Integer(32), new Integer(32), new Integer(4), new Integer(2)}
+				{"Parallelepiped", Boolean.FALSE, new Integer(4), new Integer(32), new Integer(32), new Integer(32), null, null, null, null},
+				{"Ellipsoid", Boolean.TRUE, new Integer(4), new Integer(32), new Integer(32), new Integer(32), null, null, null, null},
+				{"Cylinder", Boolean.FALSE, new Integer(4), new Integer(32), new Integer(32), new Integer(32), null, null, null, null},
+				{"Cone", Boolean.FALSE, new Integer(4), new Integer(32), new Integer(32), new Integer(32), null, null, null, null},
+				{"Torus", Boolean.FALSE, new Integer(4), new Integer(32), new Integer(32), new Integer(32), new Integer(8), new Integer(4), null, null},
+				{"Helix", Boolean.FALSE, new Integer(4), new Integer(32), new Integer(32), new Integer(32), new Integer(8), new Integer(4), new Integer(2), new Double(Math.PI)}
 				}
 				:
 				new Object[][]{
-				{"Parallelepiped", Boolean.TRUE, new Integer(4), new Integer(16), new Integer(16), new Integer(16), null, null, null},
-				{"Ellipsoid", Boolean.TRUE, new Integer(4), new Integer(16), new Integer(16), new Integer(16), null, null, null},
-				{"Cylinder", Boolean.TRUE, new Integer(4), new Integer(16), new Integer(16), new Integer(16), null, null, null},
-				{"Cone", Boolean.TRUE, new Integer(4), new Integer(16), new Integer(16), new Integer(16), null, null, null},
-				{"Torus", Boolean.TRUE, new Integer(4), new Integer(16), new Integer(16), new Integer(16), new Integer(16), new Integer(2), null},
-				{"Helix", Boolean.TRUE, new Integer(4), new Integer(16), new Integer(16), new Integer(16), new Integer(16), new Integer(2), new Integer(2)}
+				{"Parallelepiped", Boolean.FALSE, new Integer(4), new Integer(16), new Integer(16), new Integer(16), null, null, null, null},
+				{"Ellipsoid", Boolean.TRUE, new Integer(4), new Integer(16), new Integer(16), new Integer(16), null, null, null, null},
+				{"Cylinder", Boolean.FALSE, new Integer(4), new Integer(16), new Integer(16), new Integer(16), null, null, null, null},
+				{"Cone", Boolean.FALSE, new Integer(4), new Integer(16), new Integer(16), new Integer(16), null, null, null, null},
+				{"Torus", Boolean.FALSE, new Integer(4), new Integer(16), new Integer(16), new Integer(16), new Integer(4), new Integer(2), null, null},
+				{"Helix", Boolean.FALSE, new Integer(4), new Integer(16), new Integer(16), new Integer(16), new Integer(4), new Integer(2), new Integer(2), new Double(Math.PI)}
 				};
 		
 		DefaultTableModel out=new DefaultTableModel(data, columnNames) {
@@ -241,7 +241,7 @@ public class BIAS_Coloc_Simulator_GUI extends JDialog{
 			 */
 			private static final long serialVersionUID = 1L;
 			@SuppressWarnings("rawtypes")
-			Class[] columnTypes = new Class[] {String.class, Boolean.class, Integer.class, Integer.class, Integer.class, Integer.class, Integer.class, Integer.class, Integer.class};
+			Class[] columnTypes = new Class[] {String.class, Boolean.class, Integer.class, Integer.class, Integer.class, Integer.class, Integer.class, Integer.class, Integer.class, Double.class};
 			
 			@SuppressWarnings({ "rawtypes", "unchecked" })
 			@Override
@@ -267,9 +267,9 @@ public class BIAS_Coloc_Simulator_GUI extends JDialog{
 		
 		Object[][] data=new Object[][]{
 				{"Image dimensions", null, new Integer(128), new Integer(128), new Integer(128)},
-				{"Chromatic shift", true, new Integer(1), new Integer(1), new Integer(2)},
-				{"Field non-homogeneity", true, new Integer(32), new Integer(64), null},
-				{"Bleedthrough", true, new Integer(10), new Integer(20), null},
+				{"Chromatic shift", Boolean.FALSE, new Integer(1), new Integer(1), new Integer(2)},
+				{"Field non-homogeneity", Boolean.FALSE, new Integer(32), new Integer(64), null},
+				{"Bleedthrough", Boolean.FALSE, new Integer(10), new Integer(20), null},
 				};
 		
 		DefaultTableModel out=new DefaultTableModel(data, columnNames) {

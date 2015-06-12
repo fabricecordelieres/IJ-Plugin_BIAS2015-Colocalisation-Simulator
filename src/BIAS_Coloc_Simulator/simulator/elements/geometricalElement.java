@@ -41,14 +41,16 @@ public class geometricalElement {
 	public point3D innerBoundingBox;
 	
 	/** For torus: r **/
-	public int rTorus=5;
+	public double rTorus=5.0;
 	
 	/** For torus: R **/
-	public int RTorus=10;
+	public double RTorus=10.0;
 	
 	/** For helix: step **/
-	public int step=5;
+	public double step=5.0;
 	
+	/** For helix: angle **/
+	public double angle=0.0;
 	
 	/** List of points constitutive of the element **/
 	public ArrayList<point3D> points=new ArrayList<point3D>();
@@ -158,14 +160,23 @@ public class geometricalElement {
 	}
 	
 	/**
+	 * Sets the helix initial angle
+	 * @param angle angle
+	 */
+	public void setAngle(double angle) {
+		this.angle=angle;
+		initiateElement(0);
+	}
+	
+	/**
 	 * Generates the points with the bounding box, attributing the input intensity to all points
 	 * @param intensity default intensity
 	 */
 	public void initiateElement(double intensity){
 		points=new ArrayList<point3D>();
-		for(int zPos=centrePoint.z-boundingBox.z/2; zPos<centrePoint.z+boundingBox.z/2; zPos++){
-			for(int yPos=centrePoint.y-boundingBox.y/2; yPos<centrePoint.y+boundingBox.y/2; yPos++){
-				for(int xPos=centrePoint.x-boundingBox.x/2; xPos<centrePoint.x+boundingBox.x/2; xPos++){
+		for(int zPos=(int) (centrePoint.z-boundingBox.z/2.0); zPos<(int) (centrePoint.z+boundingBox.z/2.0); zPos++){
+			for(int yPos=(int) (centrePoint.y-boundingBox.y/2.0); yPos<(int) (centrePoint.y+boundingBox.y/2.0); yPos++){
+				for(int xPos=(int) (centrePoint.x-boundingBox.x/2.0); xPos<(int) (centrePoint.x+boundingBox.x/2.0); xPos++){
 					points.add(new point3D(xPos, yPos, zPos, intensity));
 				}
 			}
@@ -206,9 +217,9 @@ public class geometricalElement {
 				for(int x=(int) (centrePoint.x-radX); x<centrePoint.x+radX; x++){
 					boolean put=false;
 					
-					int xPos=x-centrePoint.x;
-					int yPos=y-centrePoint.y;
-					int zPos=z-centrePoint.z;
+					double xPos=x-centrePoint.x;
+					double yPos=y-centrePoint.y;
+					double zPos=z-centrePoint.z;
 					
 					//Required when generating adding random noise to objects
 					//double intensityToPut=randomIntensity.nextGaussian()*Math.sqrt(intensity)+intensity;
@@ -226,88 +237,88 @@ public class geometricalElement {
 							break;
 						
 						case ELLIPSOID:
-							put=(((double) xPos*xPos/(radX*radX))+((double) yPos*yPos/(radY*radY))+((double) zPos*zPos/(radZ*radZ))<=1.0);
+							put=xPos*xPos/(radX*radX)+yPos*yPos/(radY*radY)+zPos*zPos/(radZ*radZ)<=1.0;
 							
 							//Handle hollow elements
 							put=innerBoundingBox==null?put:
-								put && !(((double) xPos*xPos/(innerRadX*innerRadX))+((double) yPos*yPos/(innerRadY*innerRadY))+((double) zPos*zPos/(innerRadZ*innerRadZ))<=1.0);
+								put && !(xPos*xPos/(innerRadX*innerRadX)+yPos*yPos/(innerRadY*innerRadY)+zPos*zPos/(innerRadZ*innerRadZ)<=1.0);
 							break;
 					
 						case CYLINDER_XY:
-							put=(((double) xPos*xPos/(radX*radX))+((double) yPos*yPos/(radY*radY))<=1.0);
+							put=xPos*xPos/(radX*radX)+yPos*yPos/(radY*radY)<=1.0;
 							
 							//Handle hollow elements
 							put=innerBoundingBox==null?put:
-								put && !(((double) xPos*xPos/(innerRadX*innerRadX))+((double) yPos*yPos/(innerRadY*innerRadY))<=1.0);
+								put && !(xPos*xPos/(innerRadX*innerRadX)+yPos*yPos/(innerRadY*innerRadY)<=1.0);
 							break;
 							
 						case CYLINDER_XZ:
-							put=(((double) xPos*xPos/(radX*radX))+((double) zPos*zPos/(radZ*radZ))<=1.0);
+							put=xPos*xPos/(radX*radX)+zPos*zPos/(radZ*radZ)<=1.0;
 							
 							//Handle hollow elements
 							put=innerBoundingBox==null?put:
-								put && !(((double) xPos*xPos/(innerRadX*innerRadX))+((double) zPos*zPos/(innerRadZ*innerRadZ))<=1.0);
+								put && !(xPos*xPos/(innerRadX*innerRadX)+zPos*zPos/(innerRadZ*innerRadZ)<=1.0);
 							break;
 						
 						case CYLINDER_YZ:
-							put=(((double) yPos*yPos/(radY*radY))+((double) zPos*zPos/(radZ*radZ))<=1.0);
+							put=yPos*yPos/(radY*radY)+zPos*zPos/(radZ*radZ)<=1.0;
 							
 							//Handle hollow elements
 							put=innerBoundingBox==null?put:
-								put && !(((double) yPos*yPos/(innerRadY*innerRadY))+((double) zPos*zPos/(innerRadZ*innerRadZ))<=1.0);
+								put && !(yPos*yPos/(innerRadY*innerRadY)+zPos*zPos/(innerRadZ*innerRadZ)<=1.0);
 							break;
 							
 						case CONE_XY:
-							put=(((double) xPos*xPos/(radX*radX))+((double) yPos*yPos/(radY*radY))<=((double) (zPos+radZ)*(zPos+radZ)/(4*radZ*radZ)*tanAngleZ*tanAngleZ));
+							put=xPos*xPos/(radX*radX)+yPos*yPos/(radY*radY)<=(zPos+radZ)*(zPos+radZ)/(4*radZ*radZ)*tanAngleZ*tanAngleZ;
 							
 							//Handle hollow elements
 							put=innerBoundingBox==null?put:
-								put && !(((double) xPos*xPos/(innerRadX*innerRadX))+((double) yPos*yPos/(innerRadY*innerRadY))<=((double) (zPos+innerRadZ)*(zPos+innerRadZ)/(4*innerRadZ*innerRadZ)*tanInnerAngleZ*tanInnerAngleZ));
+								put && !(xPos*xPos/(innerRadX*innerRadX)+yPos*yPos/(innerRadY*innerRadY)<=(zPos+innerRadZ)*(zPos+innerRadZ)/(4*innerRadZ*innerRadZ)*tanInnerAngleZ*tanInnerAngleZ);
 							break;
 						
 						case CONE_XZ:
-							put=(((double) xPos*xPos/(radX*radX))+((double) zPos*zPos/(radZ*radZ))<=((double) (yPos+radY)*(yPos+radY)/(4*radY*radY)*tanAngleY*tanAngleY));
+							put=xPos*xPos/(radX*radX)+zPos*zPos/(radZ*radZ)<=(yPos+radY)*(yPos+radY)/(4*radY*radY)*tanAngleY*tanAngleY;
 							
 							//Handle hollow elements
 							put=innerBoundingBox==null?put:
-								put && !(((double) xPos*xPos/(innerRadX*innerRadX))+((double) zPos*zPos/(innerRadZ*innerRadZ))<=((double) (yPos+innerRadY)*(yPos+innerRadY)/(4*innerRadY*innerRadY)*tanInnerAngleY*tanInnerAngleY));
+								put && !((xPos*xPos/(innerRadX*innerRadX))+(zPos*zPos/(innerRadZ*innerRadZ))<=((yPos+innerRadY)*(yPos+innerRadY)/(4*innerRadY*innerRadY)*tanInnerAngleY*tanInnerAngleY));
 							break;
 							
 						case CONE_YZ:
-							put=(((double) yPos*yPos/(radY*radY))+((double) zPos*zPos/(radZ*radZ))<=((double) (xPos+radX)*(xPos+radX)/(4*radX*radX)*tanAngleX*tanAngleX));
+							put=yPos*yPos/(radY*radY)+zPos*zPos/(radZ*radZ)<=(xPos+radX)*(xPos+radX)/(4*radX*radX)*tanAngleX*tanAngleX;
 							
 							//Handle hollow elements
 							put=innerBoundingBox==null?put:
-								put && !(((double) yPos*yPos/(innerRadY*innerRadY))+((double) zPos*zPos/(innerRadZ*innerRadZ))<=((double) (xPos+innerRadX)*(xPos+innerRadX)/(4*innerRadX*innerRadX)*tanInnerAngleX*tanInnerAngleX));
+								put && !(yPos*yPos/(innerRadY*innerRadY)+zPos*zPos/(innerRadZ*innerRadZ)<=(xPos+innerRadX)*(xPos+innerRadX)/(4*innerRadX*innerRadX)*tanInnerAngleX*tanInnerAngleX);
 							break;
 							
 						case TORUS_XY:
-							put=((double) RTorus-Math.sqrt(xPos*xPos+yPos*yPos))*((double) RTorus-Math.sqrt(xPos*xPos+yPos*yPos))+zPos*zPos<=(double) rTorus*rTorus;
+							put=(RTorus-Math.sqrt(xPos*xPos+yPos*yPos))*(RTorus-Math.sqrt(xPos*xPos+yPos*yPos))+zPos*zPos<=rTorus*rTorus;
 							break;
 							
 						case TORUS_XZ:
-							put=((double) RTorus-Math.sqrt(xPos*xPos+zPos*zPos))*((double) RTorus-Math.sqrt(xPos*xPos+zPos*zPos))+yPos*yPos<=(double) rTorus*rTorus;
+							put=(RTorus-Math.sqrt(xPos*xPos+zPos*zPos))*(RTorus-Math.sqrt(xPos*xPos+zPos*zPos))+yPos*yPos<=rTorus*rTorus;
 							break;
 							
 						case TORUS_YZ:
-							put=((double) RTorus-Math.sqrt(yPos*yPos+zPos*zPos))*((double) RTorus-Math.sqrt(yPos*yPos+zPos*zPos))+xPos*xPos<=(double) rTorus*rTorus;
+							put=(RTorus-Math.sqrt(yPos*yPos+zPos*zPos))*(RTorus-Math.sqrt(yPos*yPos+zPos*zPos))+xPos*xPos<=rTorus*rTorus;
 							break;
 							
 						case HELIX_XY:
-							put=(xPos-RTorus*Math.cos(zPos/step))*(xPos-RTorus*Math.cos(zPos/step))
-									+(yPos-RTorus*Math.sin(zPos/step))*(yPos-RTorus*Math.sin(zPos/step))
+							put=(xPos-RTorus*Math.cos(zPos/step+angle))*(xPos-RTorus*Math.cos(zPos/step+angle))
+									+(yPos-RTorus*Math.sin(zPos/step+angle))*(yPos-RTorus*Math.sin(zPos/step+angle))
 									<=rTorus*rTorus;
 							break;
 							
 						case HELIX_XZ:
-							put=(xPos-RTorus*Math.cos(yPos/step))*(xPos-RTorus*Math.cos(yPos/step))
-									+(zPos-RTorus*Math.sin(yPos/step))*(zPos-RTorus*Math.sin(yPos/step))
+							put=(xPos-RTorus*Math.cos(yPos/step+angle))*(xPos-RTorus*Math.cos(yPos/step+angle))
+									+(zPos-RTorus*Math.sin(yPos/step+angle))*(zPos-RTorus*Math.sin(yPos/step+angle))
 									<=rTorus*rTorus;
 							break;
 						
 						case HELIX_YZ:
-							put=(yPos-RTorus*Math.cos(xPos/step))*(yPos-RTorus*Math.cos(xPos/step))
-									+(zPos-RTorus*Math.sin(xPos/step))*(zPos-RTorus*Math.sin(xPos/step))
+							put=(yPos-RTorus*Math.cos(xPos/step+angle))*(yPos-RTorus*Math.cos(xPos/step+angle))
+									+(zPos-RTorus*Math.sin(xPos/step+angle))*(zPos-RTorus*Math.sin(xPos/step+angle))
 									<=rTorus*rTorus;
 							break;
 							
@@ -440,12 +451,12 @@ public class geometricalElement {
 	 * @return a representation of the current geometrical element as an ImagePlus
 	 */
 	public ImagePlus getImage(){
-		ImagePlus out=NewImage.createImage("Element", centrePoint.x+boundingBox.x/2, centrePoint.y+boundingBox.y/2, centrePoint.z+boundingBox.z/2, 32, NewImage.FILL_BLACK);
+		ImagePlus out=NewImage.createImage("Element", (int) (centrePoint.x+boundingBox.x/2.0), (int) (centrePoint.y+boundingBox.y/2.0), (int) (centrePoint.z+boundingBox.z/2.0), 32, NewImage.FILL_BLACK);
 		
 		for(int i=0; i<points.size(); i++){
 			point3D currentPoint=points.get(i);
-			out.setSlice(currentPoint.getZ()+1);
-			out.getProcessor().putPixelValue(currentPoint.getX(), currentPoint.getY(), currentPoint.getIntensity());
+			out.setSlice((int) (currentPoint.getZ()+1));
+			out.getProcessor().putPixelValue((int) currentPoint.getX(), (int) currentPoint.getY(), (int) currentPoint.getIntensity());
 		}
 		
 		return out;
@@ -462,9 +473,9 @@ public class geometricalElement {
 			if(currentPoint.getZ()>=1 && currentPoint.getZ()<=in.getNSlices()
 				&& currentPoint.getX()>=0 && currentPoint.getX()<in.getWidth()
 				&& currentPoint.getY()>=0 && currentPoint.getY()<in.getHeight()){
-				in.setSlice(currentPoint.getZ()+1);
-				float currInt=in.getProcessor().getPixelValue(currentPoint.getX(), currentPoint.getY());
-				in.getProcessor().putPixelValue(currentPoint.getX(), currentPoint.getY(), currInt+currentPoint.getIntensity());
+				in.setSlice((int) (currentPoint.getZ()+1));
+				float currInt=in.getProcessor().getPixelValue((int) currentPoint.getX(), (int) currentPoint.getY());
+				in.getProcessor().putPixelValue((int) currentPoint.getX(), (int) currentPoint.getY(), currInt+currentPoint.getIntensity());
 			}
 		}
 	}
